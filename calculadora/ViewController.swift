@@ -14,7 +14,7 @@ class ViewController: UIViewController {
     var novoNumero:Double = 0;
     var resultado:Double = 0;
     var operador = "";
-    
+    var calculando = false;
     
 
     override func viewDidLoad() {
@@ -28,32 +28,33 @@ class ViewController: UIViewController {
     
     @IBAction func numeros(_ sender: UIButton)
     {
-        if label.text == ""
-        {
-            label.text = label.text! + String(sender.tag-1)
-            numeroAtual = Double(label.text!)!
-            
-        }
-       
         
-        if operador != ""
+        //armazena o numero digitado em novoNumero e executa o else, o objetivo é apagar o valor do operador já digitando um novo numero
+        if calculando == true
         {
-            label.text = ""
-            label.text = label.text! + String(sender.tag-1)
+            label.text = String(sender.tag - 1)
+            novoNumero = Double(label.text!)!
+            calculando  = false
+        }
+            
+        //O valor que ja foi digitado anteriormente continua na Label e acrescido do novo valor digitado
+        // a cada nova string, novoNumero recebe o novo valor escrito na label
+        else
+        {
+            label.text = label.text! + String(sender.tag - 1)
             novoNumero = Double(label.text!)!
         }
-        
-    
-        
-        
-  
+
+
     }
-    
-    
+
+
     @IBAction func simbolos(_ sender: UIButton) {
         // aparecer o simbolo na tela
-        if label.text != "" && sender.tag != 11
+        if label.text != "" && sender.tag != 11 && sender.tag != 16
         {
+            
+            numeroAtual = Double(label.text!)!
             
             if sender.tag == 12
             {
@@ -76,7 +77,12 @@ class ViewController: UIViewController {
                 label.text = operador
             }
             
-         if sender.tag == 16{
+            calculando = true
+        }
+            
+        
+        else if sender.tag == 16
+         {
             
             if operador == "/"
             {
@@ -99,13 +105,10 @@ class ViewController: UIViewController {
                 resultado = (numeroAtual + novoNumero)
                 label.text = String(resultado)
             }
+
+        }
             
-            numeroAtual = resultado
-        }
-      
-        }
-        
-        if sender.tag == 11
+        else if sender.tag == 11
         {
             numeroAtual = 0
             operador = ""
