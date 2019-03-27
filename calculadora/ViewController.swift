@@ -10,9 +10,10 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    var numeroAtual = 0
-    var resultado = 0
-    var operador = ""
+    var numeroAtual:Double = 0;
+    var novoNumero:Double = 0;
+    var resultado:Double = 0;
+    var operador = "";
     
     
 
@@ -25,8 +26,26 @@ class ViewController: UIViewController {
     @IBOutlet weak var label: UILabel!
     
     
-    @IBAction func numeros(_ sender: UIButton) {
-        label.text = label.text! + String(sender.tag-1)
+    @IBAction func numeros(_ sender: UIButton)
+    {
+        if label.text == ""
+        {
+            label.text = label.text! + String(sender.tag-1)
+            numeroAtual = Double(label.text!)!
+            
+        }
+       
+        
+        if operador != ""
+        {
+            label.text = ""
+            label.text = label.text! + String(sender.tag-1)
+            novoNumero = Double(label.text!)!
+        }
+        
+    
+        
+        
   
     }
     
@@ -57,6 +76,41 @@ class ViewController: UIViewController {
                 label.text = operador
             }
             
+         if sender.tag == 16{
+            
+            if operador == "/"
+            {
+                resultado = (numeroAtual / novoNumero)
+                label.text = String(resultado)
+            }
+            
+            else if operador == "x"
+            {
+                resultado = (numeroAtual * novoNumero)
+                label.text = String(resultado)
+            }
+            else if operador == "-"
+            {
+                resultado = (numeroAtual - novoNumero)
+                label.text = String(resultado)
+            }
+            else if operador == "+"
+            {
+                resultado = (numeroAtual + novoNumero)
+                label.text = String(resultado)
+            }
+            
+            numeroAtual = resultado
+        }
+      
+        }
+        
+        if sender.tag == 11
+        {
+            numeroAtual = 0
+            operador = ""
+            novoNumero = 0
+            label.text = ""
         }
         
         
